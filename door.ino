@@ -1,8 +1,5 @@
 #include<Servo.h>
 Servo door;
-int door_servo_int = D5;
-int trig = D2; //sender>>
-int echo = D3 ; //reciver
 int dur;  //duration time
 int dis; //distane 
 void open_door()
@@ -21,31 +18,29 @@ void close_door()
     delay(10);
   }
 }
-void setup() {
-  // put your setup code here, to run once:
-  //door.attach(door_servo_int);
-}
 void door_setup(){
-  pinMode(trig ,OUTPUT);
-  pinMode(echo,INPUT);
-  door.attach(door_servo_int);
+  pinMode(door_trig_pin ,OUTPUT);
+  pinMode(door_echo_pin,INPUT);
+  door.attach(door_servo_pin);
   door.write(0);
   }
-void loop() {
-  // put your main code here, to run repeatedly:
-  digitalWrite(trig,LOW);
-  delayMicroseconds(2);
-  digitalWrite(trig,HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trig,LOW);
-  dur = pulseIn(echo,HIGH);
-  dis = (dur/2)*(0.034); //0.034 speed of audio in microsecound
-  if (dis <= 30){
-    open_door();
-    delayMicroseconds(3000);
-  }
-  else{
-    close_door();
-  }
-  
-}
+
+/*** for test ***/ 
+//void loop() {
+//  // put your main code here, to run repeatedly:
+//  digitalWrite(door_door_trig,LOW);
+//  delayMicroseconds(2);
+//  digitalWrite(door_door_trig,HIGH);
+//  delayMicroseconds(10);
+//  digitalWrite(door_door_trig,LOW);
+//  dur = pulseIn(door_echo_pin,HIGH);
+//  dis = (dur/2)*(0.034); //0.034 speed of audio in microsecound
+//  if (dis <= 30){
+//    open_door();
+//    delayMicroseconds(3000);
+//  }
+//  else{
+//    close_door();
+//  }
+//  
+//}

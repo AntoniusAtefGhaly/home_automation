@@ -1,36 +1,29 @@
-int kitchen_hood_pin = D2; //Kitchen Hoods Pin "PWM"
-int dir_hood = D3; // direction motor
-int kitchen_led = D4; //kitchen led
-void kitchen_hood_fn(int spd) //Kitchen Hoods fun
+void kitchen_hood_fn(int kitchen_hood_speed) //Kitchen Hoods fun
 {
-    analogWrite(kitchen_hood_pin,spd);
-    digitalWrite(dir_hood , 1); 
+    analogWrite(kitchen_hood_pin,kitchen_hood_speed);
+    digitalWrite(kitchen_hood_dir_pin , 1); 
 }
 void kitchen_lamp_on()
   {
-    digitalWrite(kitchen_led,HIGH);
+    digitalWrite(kitchen_lamp_pin,HIGH);
   }
 void kitchen_lamp_off()
   {
-    digitalWrite(kitchen_led,LOW);
+    digitalWrite(kitchen_lamp_pin,LOW);
   }
-void setup() {
-  // put your setup code here, to run once:
- // pinMode(PKH,OUTPUT);
- // pinMode(dir,OUTPUT);
- // pinMode(Kled,OUTPUT);
-}
 void kitchen_setup(){
   pinMode(kitchen_hood_pin,OUTPUT);
-  pinMode(dir_hood,OUTPUT);
-  pinMode(kitchen_led,OUTPUT);
+  pinMode(kitchen_hood_dir_pin,OUTPUT);
+  pinMode(kitchen_lamp_pin,OUTPUT);
   }
-void loop() {
-  // put your main code here, to run repeatedly:
-  kitchen_hood_fn(500);
-  kitchen_lamp_on();
-  delay(10000);
-  kitchen_lamp_off();
-  delay(1000);
 
-}
+  /** for test **/
+//void loop() {
+//  // put your main code here, to run repeatedly:
+//  kitchen_hood_fn(500);
+//  kitchen_lamp_on();
+//  delay(10000);
+//  kitchen_lamp_off();
+//  delay(1000);
+//
+//}
