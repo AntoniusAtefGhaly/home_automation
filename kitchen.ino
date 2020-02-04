@@ -1,7 +1,6 @@
 void kitchen_hood_fn(int kitchen_hood_speed) //Kitchen Hoods fun
 {
-    analogWrite(kitchen_hood_pin,kitchen_hood_speed);
-    digitalWrite(kitchen_hood_dir_pin , 1); 
+    analogWrite(kitchen_hood_pin,kitchen_hood_speed); 
 }
 void kitchen_lamp_on()
   {
@@ -13,7 +12,6 @@ void kitchen_lamp_off()
   }
 void kitchen_setup(){
   pinMode(kitchen_hood_pin,OUTPUT);
-  pinMode(kitchen_hood_dir_pin,OUTPUT);
   pinMode(kitchen_lamp_pin,OUTPUT);
   }
 

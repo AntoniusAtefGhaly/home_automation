@@ -3,20 +3,40 @@
 #include <WiFiClient.h>
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h> // Include the WebServer library
+#define speed1 500
+#define speed2 800
+#define speed3 1023
+
 WiFiServer server(80); 
-int brightness = 50;
+int brightness = 1000;
+int value = 0;
+int door_state=1;
+int time_open=millis();;
+
+
 void setup()
 {
   wifisetup();
   bathroom_setup();  
   bedroom_setup();
-    Serial.begin(115200); 
+  door_setup();
+  kitchen_setup();
+  livingroom_setup();
+  outdoorlamp_setup();
     server.begin(); 
+//    Serial.begin(115200); 
+//    test();
 }
 
-int value = 0;
- 
+
 void loop(){
+
+//  Serial.print(analogRead(ooutdoor_sensor));
+//  Serial.print("\n"); 
+  outdoor_lamp();
+  door_sensor();
+  
+//  wifi_check_connect();
  WiFiClient client = server.available();   // listen for incoming clients 
   if (client) {                             // if you get a client,
     Serial.println("New Client.");           // print a message out the serial port
@@ -48,80 +68,81 @@ void loop(){
         }
 
 /******************** BATHROOM ************************/ 
-        if (currentLine.endsWith("GET /P")) {
+        if (currentLine.endsWith("GET /A")) {
            bathroom_lamp_on();                          //ON bathroom lamp
         }
-        if (currentLine.endsWith("GET /p")) {
+        if (currentLine.endsWith("GET /a")) {
           bathroom_lamp_off();                         //OFF bathroom lamp
         }
 
 /******************** BEDROOM ************************/               
-        if (currentLine.endsWith("GET /P")) {
+        if (currentLine.endsWith("GET /B")) {
           brightness +=100;                           //increase bedroom lamp brightness
           bedroom_lamp_brightness();
         }
-        if (currentLine.endsWith("GET /p")) {
+        if (currentLine.endsWith("GET /b")) {
           brightness -=100;                           //decrease bedroom lamp brightness
           bedroom_lamp_brightness();
         }
         
-        if (currentLine.endsWith("GET /P")) {
+        if (currentLine.endsWith("GET /C")) {
            bedroom_AC_on();                          //ON bedroom AC
         }
-        if (currentLine.endsWith("GET /p")) {
+        if (currentLine.endsWith("GET /c")) {
           bedroom_AC_off();                         //OFF bedroom AC
         }
         
 /******************** DOOR ************************/ 
-        if (currentLine.endsWith("GET /P")) {
+        if (currentLine.endsWith("GET /D")) {
            door_open();                          //open door
+           door_state=0;
         }
-        if (currentLine.endsWith("GET /p")) {
+        if (currentLine.endsWith("GET /d")) {
           door_close();                         //close door
+          door_state=1;
         }
 
 
 /******************** KITCHEN ************************/ 
-        if (currentLine.endsWith("GET /P")) {
-          kitchen_hood_fn(300);                   //hood speed 1
+        if (currentLine.endsWith("GET /E")) {
+          kitchen_hood_fn(speed1);                   //hood speed 1
         }
-        if (currentLine.endsWith("GET /p")) {
-          kitchen_hood_fn(700);                   //hood speed 2
+        if (currentLine.endsWith("GET /F")) {
+          kitchen_hood_fn(speed2);                   //hood speed 2
         }
-        if (currentLine.endsWith("GET /P")) {
-          kitchen_hood_fn(1023);                   //hood speed 3
+        if (currentLine.endsWith("GET /G")) {
+          kitchen_hood_fn(speed3);                   //hood speed 3
         }
-        if (currentLine.endsWith("GET /P")) {
+        if (currentLine.endsWith("GET /g")) {
+          kitchen_hood_fn(0);                   //hood speed 3
+        }
+        
+        if (currentLine.endsWith("GET /H")) {
            kitchen_lamp_on();                          //ON kitchen lamp
         }
-        if (currentLine.endsWith("GET /p")) {
+        if (currentLine.endsWith("GET /h")) {
           kitchen_lamp_off();                         //OFF kitchen lamp
         }
  
  /******************** LIVINGROOM ************************/ 
-        if (currentLine.endsWith("GET /P")) {
-           livingroom_lamp_on();                          //ON livingroom lamp
+        if (currentLine.endsWith("GET /J")) {
+           livingroom_lamps_on();                          //ON livingroom lamp
         }
-        if (currentLine.endsWith("GET /p")) {
-          livingroom_lamp_off();                         //OFF livingroom lamp
+        if (currentLine.endsWith("GET /j")) {
+          livingroom_lamps_off();                         //OFF livingroom lamp
         }
-        if (currentLine.endsWith("GET /P")) {
+        if (currentLine.endsWith("GET /I")) {
            livingroom_AC_on();                          //ON livingroom AC
         }
-        if (currentLine.endsWith("GET /p")) {
+        if (currentLine.endsWith("GET /i")) {
          livingroom_AC_off();                         //OFF livingroom AC
         }
 
  /******************** OUTDOOR LAMP ************************/ 
 
-
-
-        
-
-        
+    
       }
     }
-    
     // close the connection:
     client.stop();
     Serial.println("Client Disconnected.");

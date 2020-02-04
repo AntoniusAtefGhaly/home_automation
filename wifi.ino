@@ -1,12 +1,12 @@
 #include <ESP8266WiFi.h> // Include the Wi-Fi library
 #include <ESP8266WiFiMulti.h> // Include the Wi-Fi-Multi library
 ESP8266WiFiMulti wifiMulti; // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
-char * wifi_ssid1=" ";
-char * wifi_ssid2=" ";
-char * wifi_ssid3=" ";
-char * wifi_password1=" ";
-char * wifi_password2=" ";
-char * wifi_password3=" ";
+char * wifi_ssid1="es";
+char * wifi_ssid2="es1";
+char * wifi_ssid3="es2";
+char * wifi_password1="12345555";
+char * wifi_password2="12345555";
+char * wifi_password3="12345556";
 
 
 void wifisetup() {
@@ -17,6 +17,7 @@ void wifisetup() {
   wifiMulti.addAP(wifi_ssid1,wifi_password1); // add Wi-Fi networks you want to connect to
   wifiMulti.addAP(wifi_ssid2,wifi_password2);
   wifiMulti.addAP(wifi_ssid3,wifi_password3);
+
 }
 
 void wifi_check_connect() {
